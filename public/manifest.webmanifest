@@ -1,0 +1,17 @@
+{
+  "name": "EUREKA Protocol",
+  "short_name": "EUREKA",
+  "description": "Universal tokenization network for proof, ownership, and programmable rights.",
+  "theme_color": "#05070A",
+  "background_color": "#05070A",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/eureka-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
