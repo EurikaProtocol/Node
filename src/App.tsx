@@ -252,8 +252,8 @@ function WhitepaperPage() {
       </GlassCard>
       {whitepaperSections.map((section) => (
         <GlassCard key={section.title} title={section.title}>
-          {section.body.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+          {section.body.map((paragraph, index) => (
+            <p key={`${section.title}-${index}`}>{paragraph}</p>
           ))}
         </GlassCard>
       ))}

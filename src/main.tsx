@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 
+function isSafeInternalPath(value: string | null): value is string {
+  return Boolean(value && value.startsWith('/') && !value.startsWith('//'))
+}
+
 const redirectedPath = window.sessionStorage.getItem('eureka-spa-redirect')
-if (redirectedPath && window.location.pathname === '/') {
+if (isSafeInternalPath(redirectedPath) && window.location.pathname === '/') {
   window.history.replaceState(null, '', redirectedPath)
   window.sessionStorage.removeItem('eureka-spa-redirect')
 }
