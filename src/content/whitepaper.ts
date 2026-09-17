@@ -7,85 +7,50 @@ export const whitepaperSections: WhitepaperSection[] = [
   {
     title: 'Vision',
     body: [
-      'EUREKA Chain is a decentralized infrastructure for proving, owning, tokenizing and exchanging digital value.',
-      'Rather than limiting tokenization to currencies or NFTs, EUREKA introduces a universal asset layer where any verifiable object, dataset, event, permission or achievement can receive a programmable on-chain representation.',
+      'EurekaCore is a premium Web3 operating layer designed to bring wallets, staking, swaps, bridges, tokenized assets, and verified AI tooling into one coherent experience.',
+      'The goal is simple: one wallet surface, support for many chains, and user-controlled access to digital and tokenized real-world value.',
     ],
   },
   {
-    title: 'Mission',
+    title: 'ERK Token',
     body: [
-      'To create an open blockchain protocol where people, machines and applications can verify, own and exchange digital value without surrendering control of their data.',
+      'ERK is the EUREKA ecosystem token surface represented in this client. The dashboard highlights contract data, wallet actions, governance utility, staking direction, marketplace payments, AI rewards, and ecosystem fee usage.',
+      'The founder wallet displayed in the launch experience is 0x5D0435779b10234fD4941cc15fae8C7C86117E91.',
     ],
   },
   {
-    title: 'The Core Idea',
+    title: 'Multichain Wallet',
     body: [
-      'Today’s internet creates enormous value but very little ownership. Photos, documents, AI outputs, IoT data, work products and analytics are usually stored inside centralized platforms.',
-      'EUREKA separates proof from content. The blockchain stores proofs and programmable rights—not necessarily the underlying private content.',
+      'The wallet experience is designed around Bitcoin, Ethereum, BNB, Solana, XRP, Stellar, Polygon, Base, Arbitrum, Avalanche, Optimism, Tron, Litecoin, and Dogecoin.',
+      'Execution remains user-controlled. The interface avoids hidden signing flows and only exposes actions that require explicit wallet confirmation.',
     ],
   },
   {
-    title: 'EUREKA Tokenization Engine (ETE)',
+    title: 'Marketplace',
     body: [
-      'Create — Select a digital or physical object.',
-      'Verify — Validate origin, timestamp and integrity.',
-      'Tokenize — Generate a unique EUREKA Asset.',
-      'Value — Attach utility, licensing or market value.',
-      'Use / Trade — Share, license, transfer or sell.',
+      'Eureka Marketplace supports digital art, AI models, photography, handmade items, domains, and data assets in a single premium storefront.',
+      'Each listing is represented with ownership context, pricing, chain metadata, and a clear route for future settlement logic.',
     ],
   },
   {
-    title: 'Proof Layers',
+    title: 'EurekaCore AI',
     body: [
-      'Proof-of-Data secures evidence that a dataset existed at a specific moment and remains unchanged.',
-      'Proof-of-Action captures verifiable completed work such as learning, sport, or on-chain activity.',
-      'Proof-of-Device tracks trusted events from solar plants, IoT devices, vehicles and sensors.',
-      'Proof-of-Identity enables zero-knowledge verification of credentials without exposing private information.',
+      'EurekaCore AI converts verified knowledge into utility through Tinan, token generation guidance, asset verification, data tokenization, and smart contract builder workflows.',
+      'The AI layer is positioned as a natural-intelligence ecosystem rather than an autonomous trading or signing agent.',
     ],
   },
   {
-    title: 'Personal Data Vault',
+    title: 'Roadmap',
     body: [
-      'Users retain ownership of their files while the blockchain records only ownership, permissions, integrity proofs, timestamps, and transferable rights.',
+      '2026: Q1 Website Launch, Q2 ERK Token, Q3 Marketplace, Q4 EurekaCore AI.',
+      '2027: Mobile App, DAO Governance, Global Tokenization Network.',
     ],
   },
   {
-    title: 'Permission Layer',
+    title: 'Risk and Verification',
     body: [
-      'Every EUREKA Asset can define programmable permissions. This enables time-limited, usage-limited and licensed digital assets.',
-    ],
-  },
-  {
-    title: 'EUREKA Asset Standard (EAS)',
-    body: [
-      'EAS is the universal protocol for representing different asset categories with shared proof, permission and identity primitives.',
-    ],
-  },
-  {
-    title: 'EUREKA Identity',
-    body: [
-      'EUREKA ID represents verified credentials, reputation, achievements, licenses, owned assets and zero-knowledge proofs.',
-      'The goal is to prove facts without exposing sensitive information.',
-    ],
-  },
-  {
-    title: 'AI Data Economy',
-    body: [
-      'EUREKA enables permissioned AI access. A user can license a verified dataset, allow computation, and receive compensation without surrendering underlying ownership.',
-      'This is Data-to-Earn, based on verified utility rather than advertising.',
-    ],
-  },
-  {
-    title: 'Native Token (EKA)',
-    body: [
-      'EKA is the network utility token that powers the protocol.',
-      'EUREKA Assets are user-created tokenized objects and remain distinct from the EKA utility token.',
-    ],
-  },
-  {
-    title: 'Network Architecture',
-    body: [
-      'Applications interact with EUREKA through a unified SDK while assets remain interoperable across multiple chains.',
+      'This client prefers verified configuration, explicit wallet approval, and read-only contract access wherever possible.',
+      'Unavailable data remains labeled as pending rather than fabricated, especially for holders, liquidity, or unverified external integrations.',
     ],
   },
 ]
