@@ -5,5 +5,9 @@ export function attachProof(asset: EASAsset, proof: EASProof): EASAsset {
 }
 
 export function hasVerifiableProof(asset: EASAsset): boolean {
-  return Boolean(asset.proof?.digest && asset.proof.timestamp)
+  if (!asset.proof?.digest || !asset.proof.timestamp) {
+    return false
+  }
+
+  return !Number.isNaN(Date.parse(asset.proof.timestamp))
 }

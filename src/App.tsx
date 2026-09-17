@@ -328,6 +328,7 @@ function TinanAiTokenPage() {
         <InfoList
           items={[
             { label: 'Network', value: solanaConnection.network },
+            { label: 'Token', value: `${TINANAI_SOLANA_CONFIG.tokenName} (${TINANAI_SOLANA_CONFIG.tokenSymbol})` },
             { label: 'Mint', value: tinanAiToken.mint ?? 'Verification pending' },
             { label: 'Metadata', value: solanaMetadata.metadataUri ?? 'Verification pending' },
             { label: 'Status', value: tinanAiToken.message },

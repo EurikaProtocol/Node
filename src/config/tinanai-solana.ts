@@ -13,6 +13,12 @@ export const TINANAI_SOLANA_CONFIG = {
   mint: import.meta.env.VITE_TINANAI_SOLANA_MINT?.trim() ?? '',
   pumpfunTokenUrl: import.meta.env.VITE_PUMPFUN_TOKEN_URL?.trim() ?? '',
   metadataUri: import.meta.env.VITE_TINANAI_METADATA_URI?.trim() ?? '',
+  tokenName: 'TinanAI',
+  tokenSymbol: 'TINANAI',
+  tokenDescription: 'TinanAI Solana token status surface for the EUREKA client.',
+  imageUrl: '',
+  explorerUrl: '',
+  solscanUrl: '',
 } as const
 
 export const TINANAI_VERIFICATION_PENDING_MESSAGE =
