@@ -4,7 +4,7 @@ import { NotImplementedError, requireAuthorization, type AuthorizationRequest } 
 export interface EvmBalanceSnapshot {
   account: string
   balance: null
-  symbol: 'EKA'
+  symbol: typeof EUREKA_TOKEN.symbol
   status: 'unavailable'
 }
 
