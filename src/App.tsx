@@ -14,7 +14,7 @@ import { createProof } from './core/proof'
 import { attachProof, hasVerifiableProof } from './core/verify'
 import { getSolanaConnectionInfo } from './solana/connection'
 import { getSolanaMetadataStatus } from './solana/metadata'
-import { getTrustedPumpfunUrl, isTrustedExplorerUrl } from './solana/pumpfun'
+import { getTrustedPumpfunUrl, isSafeHttpsUrl } from './solana/pumpfun'
 import { getTinanAiTokenStatus } from './solana/token'
 import { getSolanaWalletPanelState } from './solana/wallet'
 
@@ -306,7 +306,7 @@ function SettingsPage() {
           items={[
             { label: 'Solana network', value: solanaConnection.network },
             { label: 'RPC URL', value: rpcLabel },
-            { label: 'Metadata URI trusted', value: isTrustedExplorerUrl(TINANAI_SOLANA_CONFIG.metadataUri) ? 'Yes' : 'No' },
+            { label: 'Metadata URI trusted', value: isSafeHttpsUrl(TINANAI_SOLANA_CONFIG.metadataUri) ? 'Yes' : 'No' },
           ]}
         />
       </GlassCard>

@@ -1,5 +1,5 @@
 import { TINANAI_SOLANA_CONFIG, TINANAI_VERIFICATION_PENDING_MESSAGE } from '../config/tinanai-solana'
-import { isTrustedExplorerUrl } from './pumpfun'
+import { isSafeHttpsUrl } from './pumpfun'
 
 export interface SolanaMetadataStatus {
   metadataUri: string | null
@@ -8,7 +8,7 @@ export interface SolanaMetadataStatus {
 }
 
 export function getSolanaMetadataStatus(): SolanaMetadataStatus {
-  const verified = isTrustedExplorerUrl(TINANAI_SOLANA_CONFIG.metadataUri)
+  const verified = isSafeHttpsUrl(TINANAI_SOLANA_CONFIG.metadataUri)
 
   return {
     metadataUri: verified ? TINANAI_SOLANA_CONFIG.metadataUri : null,
