@@ -453,6 +453,7 @@ function useEvmWallet() {
     const contract = new Contract(EUREKA_TOKEN.contract, erc20Abi, signer)
     const tx = await contract.transfer(recipient, parseUnits(amount, EUREKA_TOKEN.decimals))
     setWallet((current) => ({ ...current, status: `Transfer submitted: ${truncateMiddle(tx.hash, 10, 8)}` }))
+    await tx.wait()
     await loadFromProvider(provider, wallet.address)
   }
 
@@ -477,6 +478,7 @@ function useEvmWallet() {
     const contract = new Contract(EUREKA_TOKEN.contract, erc20Abi, signer)
     const tx = await contract.approve(spender, parseUnits(amount, EUREKA_TOKEN.decimals))
     setWallet((current) => ({ ...current, status: `Approval submitted: ${truncateMiddle(tx.hash, 10, 8)}` }))
+    await tx.wait()
     await loadFromProvider(provider, wallet.address)
   }
 
@@ -507,6 +509,8 @@ function useEvmWallet() {
   return { wallet, connect, disconnect, transfer, approve, addTokenToMetaMask }
 }
 
+type EvmWalletController = ReturnType<typeof useEvmWallet>
+
 function TokenActionForm({ title, buttonLabel, onSubmit }: { title: string; buttonLabel: string; onSubmit: (address: string, amount: string) => Promise<void> }) {
   const [address, setAddress] = useState('')
   const [amount, setAmount] = useState('')
@@ -535,6 +539,8 @@ function TokenActionForm({ title, buttonLabel, onSubmit }: { title: string; butt
 }
 
 function App() {
+  const evmWallet = useEvmWallet()
+
   return (
     <div className="app-shell">
       <ParticlesBackdrop />
@@ -558,10 +564,10 @@ function App() {
 
       <main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage evmWallet={evmWallet} />} />
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/wallet" element={<WalletPage />} />
-          <Route path="/erk-token" element={<ErkTokenPage />} />
+          <Route path="/wallet" element={<WalletPage evmWallet={evmWallet} />} />
+          <Route path="/erk-token" element={<ErkTokenPage evmWallet={evmWallet} />} />
           <Route path="/marketplace" element={<MarketplacePage />} />
           <Route path="/eurekacore-ai" element={<EurekaCoreAiPage />} />
           <Route path="/whitepaper" element={<WhitepaperPage />} />
@@ -596,8 +602,8 @@ function App() {
   )
 }
 
-function HomePage() {
-  const { connect } = useEvmWallet()
+function HomePage({ evmWallet }: { evmWallet: EvmWalletController }) {
+  const { connect } = evmWallet
 
   return (
     <div className="page-stack">
@@ -670,8 +676,8 @@ function DashboardPage() {
   )
 }
 
-function WalletPage() {
-  const { wallet, connect, disconnect, addTokenToMetaMask } = useEvmWallet()
+function WalletPage({ evmWallet }: { evmWallet: EvmWalletController }) {
+  const { wallet, connect, disconnect, addTokenToMetaMask } = evmWallet
 
   return (
     <div className="page-grid">
@@ -727,7 +733,7 @@ function WalletPage() {
           items={[
             { label: 'Connection status', value: solanaWallet.connectionStatus },
             { label: 'Wallet address', value: solanaWallet.walletAddress ?? 'Unavailable' },
-            { label: 'Recent transactions', value: solanaWallet.recentTransactions.length || 'Unavailable' },
+            { label: 'Recent transactions', value: solanaWallet.recentTransactions.length.toString() },
             { label: 'Launch status', value: tinanAiToken.message },
           ]}
         />
@@ -737,9 +743,9 @@ function WalletPage() {
   )
 }
 
-function ErkTokenPage() {
+function ErkTokenPage({ evmWallet }: { evmWallet: EvmWalletController }) {
   const metrics = useTokenMetrics()
-  const { wallet, connect, transfer, approve, addTokenToMetaMask } = useEvmWallet()
+  const { wallet, connect, transfer, approve, addTokenToMetaMask } = evmWallet
 
   return (
     <div className="page-grid token-grid">
@@ -952,10 +958,10 @@ function SwapPage() {
             <span>Slippage</span>
             <input placeholder="0.50%" />
           </label>
-          <label>
+          <div>
             <span>Price impact</span>
-            <input placeholder="Calculated after integration" disabled />
-          </label>
+            <p className="surface-note">Calculated after integration.</p>
+          </div>
           <Button tone="secondary" disabled>
             Swap
           </Button>
