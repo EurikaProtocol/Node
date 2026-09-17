@@ -192,6 +192,10 @@ function truncateMiddle(value: string, lead = 6, tail = 4) {
   return `${value.slice(0, lead)}...${value.slice(-tail)}`
 }
 
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : 'Unexpected wallet error.'
+}
+
 function formatChainId(chainId: number | null) {
   return chainId === null ? 'Unavailable' : chainId.toString()
 }
@@ -409,16 +413,20 @@ function useEvmWallet() {
       return
     }
 
-    const provider = new BrowserProvider(window.ethereum)
-    const accounts = (await provider.send('eth_requestAccounts', [])) as string[]
-    const [account] = accounts
+    try {
+      const provider = new BrowserProvider(window.ethereum)
+      const accounts = (await provider.send('eth_requestAccounts', [])) as string[]
+      const [account] = accounts
 
-    if (!account) {
-      setWallet((current) => ({ ...current, status: 'No wallet account was returned by the provider.' }))
-      return
+      if (!account) {
+        setWallet((current) => ({ ...current, status: 'No wallet account was returned by the provider.' }))
+        return
+      }
+
+      await loadFromProvider(provider, account)
+    } catch (error) {
+      setWallet((current) => ({ ...current, status: `Wallet connection failed: ${getErrorMessage(error)}` }))
     }
-
-    await loadFromProvider(provider, account)
   }
 
   async function disconnect() {
@@ -448,13 +456,17 @@ function useEvmWallet() {
       return
     }
 
-    const provider = new BrowserProvider(window.ethereum)
-    const signer = await provider.getSigner()
-    const contract = new Contract(EUREKA_TOKEN.contract, erc20Abi, signer)
-    const tx = await contract.transfer(recipient, parseUnits(amount, EUREKA_TOKEN.decimals))
-    setWallet((current) => ({ ...current, status: `Transfer submitted: ${truncateMiddle(tx.hash, 10, 8)}` }))
-    await tx.wait()
-    await loadFromProvider(provider, wallet.address)
+    try {
+      const provider = new BrowserProvider(window.ethereum)
+      const signer = await provider.getSigner()
+      const contract = new Contract(EUREKA_TOKEN.contract, erc20Abi, signer)
+      const tx = await contract.transfer(recipient, parseUnits(amount, EUREKA_TOKEN.decimals))
+      setWallet((current) => ({ ...current, status: `Transfer submitted: ${truncateMiddle(tx.hash, 10, 8)}` }))
+      await tx.wait()
+      await loadFromProvider(provider, wallet.address)
+    } catch (error) {
+      setWallet((current) => ({ ...current, status: `Transfer failed: ${getErrorMessage(error)}` }))
+    }
   }
 
   async function approve(spender: string, amount: string) {
@@ -473,13 +485,17 @@ function useEvmWallet() {
       return
     }
 
-    const provider = new BrowserProvider(window.ethereum)
-    const signer = await provider.getSigner()
-    const contract = new Contract(EUREKA_TOKEN.contract, erc20Abi, signer)
-    const tx = await contract.approve(spender, parseUnits(amount, EUREKA_TOKEN.decimals))
-    setWallet((current) => ({ ...current, status: `Approval submitted: ${truncateMiddle(tx.hash, 10, 8)}` }))
-    await tx.wait()
-    await loadFromProvider(provider, wallet.address)
+    try {
+      const provider = new BrowserProvider(window.ethereum)
+      const signer = await provider.getSigner()
+      const contract = new Contract(EUREKA_TOKEN.contract, erc20Abi, signer)
+      const tx = await contract.approve(spender, parseUnits(amount, EUREKA_TOKEN.decimals))
+      setWallet((current) => ({ ...current, status: `Approval submitted: ${truncateMiddle(tx.hash, 10, 8)}` }))
+      await tx.wait()
+      await loadFromProvider(provider, wallet.address)
+    } catch (error) {
+      setWallet((current) => ({ ...current, status: `Approval failed: ${getErrorMessage(error)}` }))
+    }
   }
 
   async function addTokenToMetaMask() {
@@ -488,22 +504,26 @@ function useEvmWallet() {
       return
     }
 
-    const result = await window.ethereum.request({
-      method: 'wallet_watchAsset',
-      params: {
-        type: 'ERC20',
-        options: {
-          address: EUREKA_TOKEN.contract,
-          symbol: EUREKA_TOKEN.symbol,
-          decimals: EUREKA_TOKEN.decimals,
+    try {
+      const result = await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: EUREKA_TOKEN.contract,
+            symbol: EUREKA_TOKEN.symbol,
+            decimals: EUREKA_TOKEN.decimals,
+          },
         },
-      },
-    })
+      })
 
-    setWallet((current) => ({
-      ...current,
-      status: result ? 'ERK token prompt opened in the wallet.' : 'The wallet declined the add-token request.',
-    }))
+      setWallet((current) => ({
+        ...current,
+        status: result ? 'ERK token prompt opened in the wallet.' : 'The wallet declined the add-token request.',
+      }))
+    } catch (error) {
+      setWallet((current) => ({ ...current, status: `Add-token request failed: ${getErrorMessage(error)}` }))
+    }
   }
 
   return { wallet, connect, disconnect, transfer, approve, addTokenToMetaMask }
