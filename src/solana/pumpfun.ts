@@ -1,18 +1,25 @@
-import { PUMPFUN_HOST } from './constants'
+const trustedExplorerHosts = new Set(['solscan.io', 'explorer.solana.com'])
+const trustedPumpfunHosts = new Set(['pump.fun', 'www.pump.fun'])
 
-const trustedHosts = new Set([PUMPFUN_HOST, 'www.pump.fun', 'solscan.io', 'explorer.solana.com'])
-
-export function isTrustedExternalUrl(value: string): boolean {
+function isTrustedHttpsUrl(value: string, allowedHosts: Set<string>): boolean {
   if (!value) return false
 
   try {
     const url = new URL(value)
-    return ['https:'].includes(url.protocol) && trustedHosts.has(url.hostname)
+    return url.protocol === 'https:' && allowedHosts.has(url.hostname)
   } catch {
     return false
   }
 }
 
+export function isTrustedPumpfunUrl(value: string): boolean {
+  return isTrustedHttpsUrl(value, trustedPumpfunHosts)
+}
+
+export function isTrustedExplorerUrl(value: string): boolean {
+  return isTrustedHttpsUrl(value, trustedExplorerHosts)
+}
+
 export function getTrustedPumpfunUrl(value: string): string | null {
-  return isTrustedExternalUrl(value) ? value : null
+  return isTrustedPumpfunUrl(value) ? value : null
 }

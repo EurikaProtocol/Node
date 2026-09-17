@@ -14,7 +14,7 @@ import { createProof } from './core/proof'
 import { attachProof, hasVerifiableProof } from './core/verify'
 import { getSolanaConnectionInfo } from './solana/connection'
 import { getSolanaMetadataStatus } from './solana/metadata'
-import { getTrustedPumpfunUrl, isTrustedExternalUrl } from './solana/pumpfun'
+import { getTrustedPumpfunUrl, isTrustedExplorerUrl } from './solana/pumpfun'
 import { getTinanAiTokenStatus } from './solana/token'
 import { getSolanaWalletPanelState } from './solana/wallet'
 
@@ -306,7 +306,7 @@ function SettingsPage() {
           items={[
             { label: 'Solana network', value: solanaConnection.network },
             { label: 'RPC URL', value: rpcLabel },
-            { label: 'Metadata URI trusted', value: isTrustedExternalUrl(TINANAI_SOLANA_CONFIG.metadataUri) ? 'Yes' : 'No' },
+            { label: 'Metadata URI trusted', value: isTrustedExplorerUrl(TINANAI_SOLANA_CONFIG.metadataUri) ? 'Yes' : 'No' },
           ]}
         />
       </GlassCard>
@@ -342,7 +342,7 @@ function PumpfunPage() {
       <GlassCard title="Launch link">
         {pumpfunUrl ? (
           <p>
-            Verified external link: <a href={pumpfunUrl} target="_blank" rel="noreferrer">{pumpfunUrl}</a>
+            <a href={pumpfunUrl} target="_blank" rel="noreferrer">Open verified Pump.fun token page</a>
           </p>
         ) : (
           <p>{TINANAI_VERIFICATION_PENDING_MESSAGE}</p>
