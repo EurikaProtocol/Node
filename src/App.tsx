@@ -75,7 +75,12 @@ function App() {
         </div>
         <nav aria-label="Primary navigation">
           {navItems.map(([to, label]) => (
-            <NavLink key={to} to={to} className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+            <NavLink
+              key={to}
+              to={to}
+              end={to === '/'}
+              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+            >
               {label}
             </NavLink>
           ))}
@@ -96,6 +101,7 @@ function App() {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/tinan-ai-token" element={<TinanAiTokenPage />} />
           <Route path="/pumpfun" element={<PumpfunPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
 
@@ -330,6 +336,17 @@ function TinanAiTokenPage() {
       </GlassCard>
       <GlassCard title="Important distinction">
         <p>EKA is the EUREKA Protocol native utility token on Ethereum. TinanAI on Solana is a separate token context and does not replace EKA.</p>
+      </GlassCard>
+    </div>
+  )
+}
+
+function NotFoundPage() {
+  return (
+    <div className="page-grid">
+      <PageIntro title="Page not found" badge="404" description="The requested route is not part of the current EUREKA static client. Use the shared navigation to return to a supported section." />
+      <GlassCard title="Available sections">
+        <p>Supported sections include the landing page, dashboard, wallet, TinanAI, marketplace, whitepaper, staking, swap, explorer, settings, TinanAI token, and Pump.fun.</p>
       </GlassCard>
     </div>
   )
