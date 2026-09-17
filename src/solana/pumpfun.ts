@@ -16,7 +16,7 @@ function isTrustedHttpsUrl(value: string, allowedHosts: Set<string>): boolean {
   if (!isSafeHttpsUrl(value)) return false
 
   const url = new URL(value)
-  return allowedHosts.has(url.hostname)
+  return allowedHosts.has(url.hostname.toLowerCase())
 }
 
 export function isTrustedPumpfunUrl(value: string): boolean {

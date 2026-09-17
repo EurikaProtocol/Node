@@ -8,11 +8,15 @@ export interface SolanaMetadataStatus {
 }
 
 export function getSolanaMetadataStatus(): SolanaMetadataStatus {
-  const verified = isSafeHttpsUrl(TINANAI_SOLANA_CONFIG.metadataUri)
+  const metadataUri = isSafeHttpsUrl(TINANAI_SOLANA_CONFIG.metadataUri)
+    ? TINANAI_SOLANA_CONFIG.metadataUri
+    : null
 
   return {
-    metadataUri: verified ? TINANAI_SOLANA_CONFIG.metadataUri : null,
-    verified,
-    message: verified ? 'Verified metadata URI available.' : TINANAI_VERIFICATION_PENDING_MESSAGE,
+    metadataUri,
+    verified: false,
+    message: metadataUri
+      ? 'Metadata URI configured, but verification is still pending.'
+      : TINANAI_VERIFICATION_PENDING_MESSAGE,
   }
 }

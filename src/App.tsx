@@ -293,7 +293,7 @@ function ExplorerPage() {
           items={[
             { label: 'Asset proof', value: hasVerifiableProof(sampleAsset) ? 'Available for demo asset' : 'Unavailable' },
             { label: 'Metadata URI', value: sampleAsset.metadataUri ?? 'Unavailable' },
-            { label: 'Solana metadata', value: solanaMetadata.verified ? 'Verified URI configured' : solanaMetadata.message },
+            { label: 'Solana metadata', value: solanaMetadata.metadataUri ?? solanaMetadata.message },
           ]}
         />
       </GlassCard>
@@ -312,7 +312,7 @@ function SettingsPage() {
           items={[
             { label: 'Solana network', value: solanaConnection.network },
             { label: 'RPC URL', value: rpcLabel },
-            { label: 'Metadata URI trusted', value: isSafeHttpsUrl(TINANAI_SOLANA_CONFIG.metadataUri) ? 'Yes' : 'No' },
+            { label: 'Metadata URI configured', value: isSafeHttpsUrl(TINANAI_SOLANA_CONFIG.metadataUri) ? 'Yes, pending verification' : 'No' },
           ]}
         />
       </GlassCard>
